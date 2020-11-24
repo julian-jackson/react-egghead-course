@@ -1,0 +1,87 @@
+<body>
+    <div id="root"></div>
+    <script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+    <style>
+
+    body{
+        background-image: linear-gradient(120deg, #f6d365, #fda085);
+        color: white;
+        font-family: "Nunito", sans-serif;
+        min-height:  100vh;
+        padding-top: 5vh;
+        padding-left: 40%;
+
+    }
+
+
+
+    input {
+    margin:auto;
+    width: 40%;
+    padding: 5px 5px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+    button {
+    width: 20%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    align-content: right;
+    }
+
+    </style>
+    <script type="text/babel">
+
+    function Greeting() {
+        const [name, setName] = React.useState( () => window.localStorage.getItem("name") || "")
+        const usernameHandleChange= event => setName(event.target.value)
+        
+        const [password, setPassword] = React.useState( () => window.localStorage.getItem("password") || "")
+        const passwordHandleChange = event => setPassword(event.target.value)
+
+        const masterUsername = "admin"
+        const masterPassword = "password"
+
+        function confirmLogin() {
+            if (masterUsername == name) {
+                if (masterPassword == password) {
+                    console.log("Correct password");
+                    window.location = "https://anz.com.au"
+                }
+                else {
+                    console.log("Incorrect password or username")
+                    // window.location = "https://www.asio.gov.au/"
+                }          
+            }            
+        }
+
+        React.useEffect(() => {
+            window.localStorage.setItem("name", name)
+            window.localStorage.setItem("password", password)
+
+        },[])
+        return ( 
+        <div style={{justifyContent: "right", display: "left", alignItems: "center", width: "50%",}}>
+            <h1>ABC Banking</h1>
+            <form>
+                <label htmlFor="name">Username: </label>
+                <input value={name} onChange={usernameHandleChange} id="name" />
+                <div>
+                    <label htmlFor="password">Password: </label>
+                    <input type="password" value={password} onChange={passwordHandleChange} id="password" />
+                </div>
+
+
+            </form>
+            <button onClick={confirmLogin}>Login</button>
+        </div>
+        )
+    }
+
+    ReactDOM.render(<Greeting />, document.getElementById("root"))
+    </script>
+</body> 
